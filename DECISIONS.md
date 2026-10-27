@@ -26,7 +26,11 @@ Commit this answer before your first `uv run p2 score` on the own corpus.
 Git history then shows that the expectation came first, which is what lets it be wrong in a way that teaches you something.
 If you were surprised later, say so in prompt 4 or in EVAL.md; do not come back and rewrite this one.
 
-TODO: your answer to prompt 1.
+I chose the corpus of congressional research/report documents specifically related to energy and climate mainly due to the easily accessible documents and the fact that it would be the easiest sourcing. While I do care about energy and climate and what the US congress reports or what the documents contain, the primary motivation is to ensure the RAG system is working as expected and to determine which retrieval method works best. 
+
+I predict that Hybrid will work the best based on the fact that it is usually at least as good as the weaker of the two methods (bm25 and dense). While it can inherit the mistakes both make I think it will generally do well. 
+
+The method that will likely preform the worst in my opinion is the dense method. This is because exact names and numbers may cause confusion with similar reports like the same title in different years. 
 
 ---
 
