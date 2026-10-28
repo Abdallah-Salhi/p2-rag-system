@@ -7,8 +7,8 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 ## Summary
 
 - Documents: 259 (the final check needs at least 200)
-- Words: 375,546
-- Estimated tokens (words times 1.4): 525,764 (`p2 check` warns above 800,000 and fails above 1,000,000)
+- Words: 376,342
+- Estimated tokens (words times 1.4): 526,878 (`p2 check` warns above 800,000 and fails above 1,000,000)
 - Flagged documents: 0
 
 ## Documents
