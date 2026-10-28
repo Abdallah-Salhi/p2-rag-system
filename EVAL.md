@@ -25,7 +25,13 @@ The minimum detectable difference is the smallest gap this many queries could re
 
 For each of `dense`, `hybrid` and `rerank`, one or two sentences: the embedding model, how documents were chunked, what was fused and how, how many candidates the reranker saw, and anything you changed from the 12 and 13 lab code.
 
-TODO: describe your three systems.
+For dense, the model chose was bge-small-en-v1.5. The documents are cut into chunks of 300 words with 50 words of overlap. The chunk vectors are cached, and ranking is cosine similarity (one matrix product). 
+
+For hybrid, it was the reciprocal rank fusion of bm25 and dense, with k = 60. Each document scores the sum of 1/(60 + rank). It fuses the full rankings, not just the top 10. 
+
+For rerank, the model is Sonnet. It takes hybrid's top 20 documents, shows claude each as its best-matching chunk, and asks for a best-first order of the 20. The reply is then forced into a fixed shape, and a bad reply or a failed call keeps the hybrid order.
+
+The two main differences from the lab are that the unit is chunk lifted to its document, and that the reranker shows the whole chunk rather than cutting to 600 characters.
 
 ### Practice queries (20)
 
@@ -38,6 +44,7 @@ Scores per system.
 | dense | 0.558 | 0.562 | 0.480 |
 | hybrid | 0.592 | 0.471 | 0.443 |
 | rerank | 0.758 | 0.800 | 0.765 |
+| rerank_c10 | 0.592 | 0.717 | 0.611 |
 
 20 judged queries; nDCG uses binary labels; a random ranking of the 2,484 documents would get recall@10 near 0.004.
 <!-- p2:end shared-practice -->
@@ -59,6 +66,9 @@ The same scores per query class.
 | rerank | Recall@10 | 0.714 | 0.595 | 1.000 |
 | rerank | MRR@10 | 0.714 | 0.714 | 1.000 |
 | rerank | nDCG@10 | 0.703 | 0.626 | 1.000 |
+| rerank_c10 | Recall@10 | 0.500 | 0.405 | 0.917 |
+| rerank_c10 | MRR@10 | 0.619 | 0.571 | 1.000 |
+| rerank_c10 | nDCG@10 | 0.505 | 0.440 | 0.936 |
 <!-- p2:end shared-practice-classes -->
 
 Differences between every pair of systems, each with its paired interval and the minimum detectable difference.
@@ -84,8 +94,20 @@ Differences between every pair of systems, each with its paired interval and the
 | rerank minus hybrid | Recall@10 | +0.167 | [+0.058, +0.292] | 0.166 | rerank higher |
 | rerank minus hybrid | MRR@10 | +0.329 | [+0.164, +0.504] | 0.247 | rerank higher |
 | rerank minus hybrid | nDCG@10 | +0.322 | [+0.197, +0.449] | 0.182 | rerank higher |
+| rerank_c10 minus bm25 | Recall@10 | -0.033 | [-0.250, +0.192] | 0.324 | not distinguishable |
+| rerank_c10 minus bm25 | MRR@10 | +0.210 | [-0.040, +0.460] | 0.361 | not distinguishable |
+| rerank_c10 minus bm25 | nDCG@10 | +0.093 | [-0.137, +0.322] | 0.334 | not distinguishable |
+| rerank_c10 minus dense | Recall@10 | +0.033 | [-0.125, +0.192] | 0.231 | not distinguishable |
+| rerank_c10 minus dense | MRR@10 | +0.154 | [-0.033, +0.342] | 0.270 | not distinguishable |
+| rerank_c10 minus dense | nDCG@10 | +0.132 | [-0.037, +0.293] | 0.242 | not distinguishable |
+| rerank_c10 minus hybrid | Recall@10 | +0.000 | [+0.000, +0.000] | - | identical on every query |
+| rerank_c10 minus hybrid | MRR@10 | +0.246 | [+0.091, +0.416] | 0.235 | rerank_c10 higher |
+| rerank_c10 minus hybrid | nDCG@10 | +0.168 | [+0.067, +0.280] | 0.155 | rerank_c10 higher |
+| rerank_c10 minus rerank | Recall@10 | -0.167 | [-0.292, -0.058] | 0.166 | rerank higher |
+| rerank_c10 minus rerank | MRR@10 | -0.083 | [-0.217, +0.000] | 0.164 | not distinguishable |
+| rerank_c10 minus rerank | nDCG@10 | -0.153 | [-0.272, -0.050] | 0.159 | rerank higher |
 
-The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time.
+The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time. Two systems that score the same on every query have no interval to speak of, so their MDD is shown as -.
 <!-- p2:end shared-practice-pairs -->
 
 The 40 test queries have no answer key in this repo.
@@ -97,7 +119,11 @@ Which differences are distinguishable from zero and which are not?
 What is the minimum detectable difference at 20 queries, and what does that say about any gap smaller than it?
 Which claim from lecture 12 or 13 did your numbers support, and which did they leave open?
 
-TODO: write what the practice-query intervals let you claim.
+The differences that are clearly distinguishable are rerank, which is clearly higher than hybrid and dense on every metric, including recall. However, rerank is not distinguishable against bm25 on recall, and dense and hybrid against each other, and bm25. 
+
+ The MDD which ranges from 0.41 at its highest to about 0.16 at its lowest, shows that with 20 queries, a gap smaller than the MDD is invisible to the gold set, but doesn't mean the gap is absent. 
+ 
+ The lecture 12 claim is supported, because no retriever wins everywhere. bm25 wins on identifier queries and gets 0 on paraphrases, while dense is much better on paraphrases. On the other hand, the per-class cells have only 6 or 7 queries and no intervals, so they suggest a pattern and don't establish it.
 
 ---
 
@@ -116,7 +142,24 @@ Then read three in-corpus answers that `uv run p2 verify` passed.
 For each one, open the cited chunk and say whether the quote really supports the claim next to it.
 The check proves a quote is a real piece of the chunk and cannot prove that it supports the claim, so this reading is the part only you can do.
 
-TODO: write your answer choices and your three-answer audit.
+The system that answered is rerank because it is the best retriever, which cost 2 calls per question. Regarding prompts/answer.txt, I didn't change it and the verified share and the decline share are both 100%.
+
+a03-
+ Question: How long must the self-rescue device last? 
+ Claim: Operator must provide an approved device adequate for 1 hour or longer (30 CFR 75.1714)
+ Cited Chunk: cfr30-75.1714#0
+
+ Comparing this quote with the claim. The quote says
+
+a05- 
+ Question: How many hours of training for a new underground miner?
+ Claim: No less than 40 hours before work duties, and approximately 8 hours at the minesite (two claims) 
+ Cited Chunk: cfr30-48.5#0
+
+a08- 
+ Question: For how many hours must breathable air sustain each person in a refuge alternative?
+ Claim: Breathable air must sustain each person for 96 hours
+ Cited Chunk: cfr30-7.506#0
 
 ---
 
@@ -263,6 +306,7 @@ Every trace in traces/ that records a Claude call:
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | traces/answers-rerank.jsonl | rerank | 12 | 24 | 4 | 200,636 | 4,164 | 117.5 | 16,720 | 347 | 9.8 |
 | traces/shared-practice-rerank.jsonl | rerank | 20 | 20 | 2 | 274,312 | 2,125 | 90.9 | 13,716 | 106 | 4.5 |
+| traces/shared-practice-rerank_c10.jsonl | rerank_c10 | 20 | 20 | 0 | 168,595 | 1,420 | 99.0 | 8,430 | 71 | 4.9 |
 | traces/shared-test-rerank.jsonl | rerank | 40 | 40 | 0 | 487,709 | 4,111 | 163.9 | 12,193 | 103 | 4.1 |
 
 A span is one query of a run, one question of an answers file, or one claim of a judged file. A saved reply costs nothing now, so it counts the tokens and the seconds of the call that made it.
@@ -274,6 +318,10 @@ Every pair of systems on the same queries where at least one calls Claude, the o
 | shared practice: bm25 minus rerank | 20 | -0.293 | [-0.533, -0.043] | 13,716 | 4.5 | rerank higher |
 | shared practice: dense minus rerank | 20 | -0.237 | [-0.408, -0.083] | 13,716 | 4.5 | rerank higher |
 | shared practice: hybrid minus rerank | 20 | -0.329 | [-0.504, -0.164] | 13,716 | 4.5 | rerank higher |
+| shared practice: bm25 minus rerank_c10 | 20 | -0.210 | [-0.460, +0.040] | 8,430 | 4.9 | not distinguishable |
+| shared practice: dense minus rerank_c10 | 20 | -0.154 | [-0.342, +0.033] | 8,430 | 4.9 | not distinguishable |
+| shared practice: hybrid minus rerank_c10 | 20 | -0.246 | [-0.416, -0.091] | 8,430 | 4.9 | rerank_c10 higher |
+| shared practice: rerank_c10 minus rerank | 20 | -0.083 | [-0.217, +0.000] | 5,286 | -0.4 | not distinguishable |
 
 The difference is the cheaper system's score minus the dearer one's, with its paired interval; the savings count Claude calls only, so a system that makes none saves all of the other's.
 
