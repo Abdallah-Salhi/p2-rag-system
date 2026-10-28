@@ -6,9 +6,9 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 
 ## Summary
 
-- Documents: 259 (the final check needs at least 200)
-- Words: 376,342
-- Estimated tokens (words times 1.4): 526,878 (`p2 check` warns above 800,000 and fails above 1,000,000)
+- Documents: 252 (the final check needs at least 200)
+- Words: 365,704
+- Estimated tokens (words times 1.4): 511,985 (`p2 check` warns above 800,000 and fails above 1,000,000)
 - Flagged documents: 0
 
 ## Documents
@@ -19,8 +19,6 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 | `if10382` | 1,662 | - | - | - |
 | `if10397` | 1,051 | - | - | - |
 | `if10479` | 1,788 | - | - | - |
-| `if10519` | 1,684 | - | - | - |
-| `if10521` | 1,700 | - | - | - |
 | `if10589` | 1,092 | - | - | - |
 | `if10639` | 1,571 | - | - | - |
 | `if10668` | 1,803 | - | - | - |
@@ -73,7 +71,6 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 | `if11691` | 1,628 | - | - | - |
 | `if11693` | 1,514 | - | - | - |
 | `if11696` | 1,761 | - | - | - |
-| `if11697` | 1,568 | - | - | - |
 | `if11746` | 1,724 | - | - | - |
 | `if11754` | 1,497 | - | - | - |
 | `if11779` | 1,453 | - | - | - |
@@ -130,7 +127,6 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 | `if12753` | 1,727 | - | - | - |
 | `if12757` | 1,773 | - | - | - |
 | `if12819` | 1,927 | - | - | - |
-| `if12841` | 1,871 | - | - | - |
 | `if12862` | 1,722 | - | - | - |
 | `if12913` | 2,052 | - | - | - |
 | `if12916` | 1,849 | - | - | - |
@@ -141,7 +137,6 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 | `if13064` | 1,791 | - | - | - |
 | `if13089` | 1,824 | - | - | - |
 | `if13119` | 2,306 | - | - | - |
-| `if13157` | 1,503 | - | - | - |
 | `if13159` | 1,942 | - | - | - |
 | `if13211` | 1,080 | - | - | - |
 | `if13223` | 1,587 | - | - | - |
@@ -155,7 +150,6 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 | `in10731` | 1,157 | - | - | - |
 | `in10856` | 1,051 | - | - | - |
 | `in10864` | 987 | - | - | - |
-| `in10866` | 1,078 | - | - | - |
 | `in10873` | 900 | - | - | - |
 | `in10895` | 983 | - | - | - |
 | `in10930` | 967 | - | - | - |
@@ -230,7 +224,6 @@ Running ingest again adds to the table and replaces the "last run" section, and 
 | `in12412` | 1,119 | - | - | - |
 | `in12422` | 1,380 | - | - | - |
 | `in12423` | 1,424 | - | - | - |
-| `in12464` | 1,166 | - | - | - |
 | `in12465` | 1,161 | - | - | - |
 | `in12488` | 1,191 | - | - | - |
 | `in12528` | 1,008 | - | - | - |

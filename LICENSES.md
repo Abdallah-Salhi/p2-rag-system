@@ -6,8 +6,8 @@ It cannot prove a license, and you remain responsible for every document you com
 
 ## Summary
 
-- Documents: 259
-- ok: 259 (of which 0 had a flag that you reviewed)
+- Documents: 252
+- ok: 252 (of which 0 had a flag that you reviewed)
 - flag, not yet reviewed: 0
 - fail: 0
 - Online lookups: not run (use `--online` on your own machine)
@@ -20,8 +20,6 @@ It cannot prove a license, and you remain responsible for every document you com
 | `if10382` | us-gov-public-domain | ok | - |
 | `if10397` | us-gov-public-domain | ok | - |
 | `if10479` | us-gov-public-domain | ok | - |
-| `if10519` | us-gov-public-domain | ok | - |
-| `if10521` | us-gov-public-domain | ok | - |
 | `if10589` | us-gov-public-domain | ok | - |
 | `if10639` | us-gov-public-domain | ok | - |
 | `if10668` | us-gov-public-domain | ok | - |
@@ -74,7 +72,6 @@ It cannot prove a license, and you remain responsible for every document you com
 | `if11691` | us-gov-public-domain | ok | - |
 | `if11693` | us-gov-public-domain | ok | - |
 | `if11696` | us-gov-public-domain | ok | - |
-| `if11697` | us-gov-public-domain | ok | - |
 | `if11746` | us-gov-public-domain | ok | - |
 | `if11754` | us-gov-public-domain | ok | - |
 | `if11779` | us-gov-public-domain | ok | - |
@@ -131,7 +128,6 @@ It cannot prove a license, and you remain responsible for every document you com
 | `if12753` | us-gov-public-domain | ok | - |
 | `if12757` | us-gov-public-domain | ok | mentions ASTM without words about rights on the same line, which is not a flag |
 | `if12819` | us-gov-public-domain | ok | - |
-| `if12841` | us-gov-public-domain | ok | - |
 | `if12862` | us-gov-public-domain | ok | - |
 | `if12913` | us-gov-public-domain | ok | - |
 | `if12916` | us-gov-public-domain | ok | - |
@@ -142,7 +138,6 @@ It cannot prove a license, and you remain responsible for every document you com
 | `if13064` | us-gov-public-domain | ok | - |
 | `if13089` | us-gov-public-domain | ok | - |
 | `if13119` | us-gov-public-domain | ok | - |
-| `if13157` | us-gov-public-domain | ok | - |
 | `if13159` | us-gov-public-domain | ok | - |
 | `if13211` | us-gov-public-domain | ok | - |
 | `if13223` | us-gov-public-domain | ok | - |
@@ -156,7 +151,6 @@ It cannot prove a license, and you remain responsible for every document you com
 | `in10731` | us-gov-public-domain | ok | - |
 | `in10856` | us-gov-public-domain | ok | - |
 | `in10864` | us-gov-public-domain | ok | - |
-| `in10866` | us-gov-public-domain | ok | - |
 | `in10873` | us-gov-public-domain | ok | - |
 | `in10895` | us-gov-public-domain | ok | - |
 | `in10930` | us-gov-public-domain | ok | - |
@@ -231,7 +225,6 @@ It cannot prove a license, and you remain responsible for every document you com
 | `in12412` | us-gov-public-domain | ok | - |
 | `in12422` | us-gov-public-domain | ok | - |
 | `in12423` | us-gov-public-domain | ok | - |
-| `in12464` | us-gov-public-domain | ok | - |
 | `in12465` | us-gov-public-domain | ok | - |
 | `in12488` | us-gov-public-domain | ok | - |
 | `in12528` | us-gov-public-domain | ok | - |
