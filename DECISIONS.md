@@ -45,7 +45,7 @@ If you rejected the alternative without measuring it, say why that was a fair ca
 "There was no alternative" is not an answer.
 Find the fork.
 
-TODO: your answer to prompt 2.
+We faced a fork on document chunk size: whether to stick with the baseline 300-word chunks or test 150-word and 600-word variants. We ultimately picked 300 words as our baseline. Comparing the variants against our 300-word baseline (which achieved MRR@10 of 0.983, Recall@10 of 0.953, and nDCG@10 of 0.926), the 150-word chunks performed worse across the board (MRR@10 0.967, Recall@10 0.889, nDCG@10 0.861), while the 600-word chunks yielded a higher MRR@10 of 1.000 but a lower Recall@10 of 0.911 and a lower nDCG@10 of 0.886. What we gave up by sticking with the 300-word baseline was the absolute top-rank MRR score achieved by the larger chunks; however, since none of the MRR@10 differences were statistically distinguishable, choosing 300 words avoided the nDCG degradation and recall loss seen in the variants.
 
 ---
 
