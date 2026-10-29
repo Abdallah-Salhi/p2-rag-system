@@ -518,7 +518,11 @@ _No stretch runs yet (stretch option 5): `uv run p2 run --corpus own --queries e
 
 ### Your stretch
 
-Write the five things here.
+1. **The option's name:** Cost and latency (option 3).
+2. **What you did, and the files:** We implemented and evaluated a cheaper reranking variant (`rerank_c10`) that restricts the Claude reranker to inspect only the top 10 hybrid candidates instead of 20, comparing it against the full rerank configuration and zero-call retrievers. The supporting files include `p2/retrievers/rerank_c10.py`, `runs/shared/rerank_c10.practice.trec`, `traces/shared-practice-rerank_c10.jsonl`, and all commit traces listed in the cost table.
+3. **The table:** The `stretch-cost` table already populated in Section 8 of `EVAL.md`.
+4. **What its interval lets you claim, and what it does not:** The interval lets us claim that reducing candidate pool size from 20 to 10 saves 5,286 input tokens per query (~39%) with no measurable time savings (-0.4 seconds). In terms of quality, the MRR@10 drop of -0.083 between `rerank_c10` and full `rerank` yields an interval of `[-0.217, +0.000]`, meaning the quality cost is not distinguishable from zero on this 20-query set, though the interval boundary at zero prevents us from claiming it is entirely free. On our own corpus, comparing zero-call dense against full rerank shows that dense saves all 17,206 input tokens per query with an MRR@10 difference of +0.072 (`[-0.011, +0.169]`), which is also not distinguishable. Consequently, we would not make the trade of paying ~17,000 Claude tokens per query for a gain we cannot statistically confirm, preferring the zero-cost dense model for production use cases where LLM latency and token expenses must be strictly avoided.
+5. **One thing you would do next, and what result would tell you it worked:** Next, we would test `rerank_c10` on our own corpus to see if a smaller candidate pool retains dense's already-high baseline while shedding overhead. A successful result would show an MRR@10 difference that remains statistically indistinguishable from dense or full rerank while cutting token consumption proportionally.
 
 ---
 
