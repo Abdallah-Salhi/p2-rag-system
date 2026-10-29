@@ -149,17 +149,21 @@ a03-
  Claim: Operator must provide an approved device adequate for 1 hour or longer (30 CFR 75.1714)
  Cited Chunk: cfr30-75.1714#0
 
- Comparing this quote with the claim. The quote says
+ Opened chunk cfr30-75.1714#0. The text states that the operator must make available an approved self-rescue device "which is adequate to protect such person for 1 hour or longer," so the quote fully supports the claim.
 
 a05- 
  Question: How many hours of training for a new underground miner?
  Claim: No less than 40 hours before work duties, and approximately 8 hours at the minesite (two claims) 
  Cited Chunk: cfr30-48.5#0
 
+ In cfr30-48.5#0, the text states that "approximately 8 hours of training shall be given at the minesite" and separately notes that training "shall be conducted in conditions which as closely as practicable duplicate actual underground conditions." Because both clauses exist within the exact same sentence of the chunk, it explicitly confirms that the minesite training applies to underground mining without needing to rely on broader context outside the chunk.
+
 a08- 
  Question: For how many hours must breathable air sustain each person in a refuge alternative?
  Claim: Breathable air must sustain each person for 96 hours
  Cited Chunk: cfr30-7.506#0
+
+ Clause (b)(1) of cfr30-7.506#0 states: "The breathable air sustains each person for 96 hours." However, the chunk alone does not tell the full story: as noted in the answer file, Section 75.1507 permits a refuge alternative to sustain persons for only 48 hours if advance arrangements are made for additional supplies.
 
 ---
 

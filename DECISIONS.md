@@ -61,7 +61,7 @@ What did you do instead?
 If it genuinely never happened, say so plainly, and then say what you would have had to check in order to notice.
 Being honest here costs you far less than a story you cannot defend when you record your video.
 
-TODO: your answer to prompt 3.
+I initially asked to move and rename the parent directory to fix a uv run path error caused by a colon in Coding:Programming. I chose not to proceed after seeing the trade-offs: moving the top-level folder would shift all projects under it, break saved VS Code workspaces, invalidate shell shortcuts, disconnect the active AI session, and lose path-tied memory. The repo's git history and remotes were never at risk, but the widespread setup breaks were not worth it, so I opted for a local symlink instead.
 
 ---
 
@@ -73,7 +73,9 @@ It could be a mean over a small query class, a difference whose interval include
 What would have to be true for you to trust it?
 Did you do anything to test it, and what did that show?
 
-TODO: your answer to prompt 4.
+I don't completely trust our Dense MRR@10 score of 0.983 on our own corpus. The candidate pool for our gold set was built by taking the top results from bm25, dense, and hybrid, meaning dense was only judged against documents it or the other retrievers already surfaced. To truly trust it, we would need an independent random sample of documents evaluated for relevance rather than a closed candidate pool.
+
+I did not formally test this number against an unjudged document audit during the run. Across dense's top 300 results (top 10 for 30 queries), 89 were judged relevant, 168 were evaluated and judged not relevant, and 43 documents (14%) were never shown or evaluated at all.
 
 ---
 
@@ -84,4 +86,6 @@ One thing in your system, your corpus or your gold set that is not right, not fi
 What would you do next, and how would you find out whether it matters?
 Name the file, the query or the document where someone could look.
 
-TODO: your answer to prompt 5.
+One thing that isn't right is query h05 ("What could be a realistic alternative to the more polluting energy sources?"), where the relevant document if12411 (Fusion Energy) was ranked way down at 104 by dense because fusion doesn't have working grid-connected reactors yet. This shows a mismatch in our relevance labeling, an unproven technology might not fit a "realistic" alternative label. To fix it, I'd re-examine our qrels file and clean up whether research-stage energy sources should count as relevant answers.
+
+To find out if this labeling discrepancy matters, I would remove `if12411` from the relevance labels (`qrels`) for `h05` and re-score the runs to measure the precise shift in MRR@10 and nDCG@10 on `hand` queries.
