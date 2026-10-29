@@ -390,7 +390,13 @@ What did you change, what happened, and does the interval support the claim you 
 If the result is not distinguishable, say what size of effect your gold set could have seen.
 Read the queries at the top of each list in the second table, and say whether your change explains them.
 
-TODO: write the ablation: the one change, the hypothesis, the result and the claim.
+For the ablation, we tested altering baseline document chunk sizes from 300 words to 150 words and 600 words to observe the effect on dense retrieval accuracy. The hypothesis was half-right: shrinking the chunk size to 150 words did not improve performance; instead, it significantly lowered Recall@10 (dropping by 0.064 with an interval of [-0.111, -0.024]) and nDCG@10 (dropping by 0.064 with an interval of [-0.101, -0.032]).
+
+Conversely, expanding chunks to 600 words kept MRR@10 largely indistinguishable from baseline (+0.017, interval [0.000, +0.050]), but nDCG@10 was slightly lower (-0.039, interval [-0.078, -0.006], "dense higher"). Because nDCG@10 decreased while recall dropped slightly (not distinguishable at -0.042), we cannot entirely rule out some semantic dilution from larger blocks of text. Given our gold-set size, the minimum detectable difference (MDD) is roughly 0.047 for MRR@10, meaning smaller performance shifts are invisible. Thus, the data support claiming that 150-word chunks significantly lower recall and hurt granular document matching, whereas 600-word chunks maintain top-rank accuracy (MRR@10) but exhibit a slight drop in nDCG@10, pointing to mild information dilution.
+
+For c02, shrinking chunks to 150 words did not fragment precise contextual cues across boundaries; instead, a shorter title-and-intro chunk scored lower while a biofuel-grants chunk from another report (in11978) outscored it, dropping the first relevant document (lsb10418) from rank 1 to rank 2. Furthermore, the 600-word run kept c02's first relevant document at rank 1 but pushed its other relevant documents down to ranks 5 and 8, revealing a hidden recall penalty not captured by MRR@10.
+
+For h09, the 600-word run's top result (if12753#2) started with unrelated FEMA text rather than a complete topical discussion, and its rise to rank 1 came with a net loss as one relevant document (if12290) dropped out of the top 10 entirely. Because we only examined these two specific queries, these explanations remain hypotheses rather than broad findings. This points to mild information dilution where larger context windows can shuffle relevant documents out of top ranks or introduce unrelated text.
 
 ---
 
