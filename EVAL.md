@@ -171,7 +171,7 @@ What is it, where did it come from, how many documents and how many megabytes, a
 Name the one or two documents you were least sure about and what you decided.
 Say which of the allowed sources in the brief it comes from.
 
-TODO: describe your corpus and its license basis.
+Our corpus consists of 252 Congressional Research Service (CRS) reports covering energy and climate policy, retrieved from EveryCRSReport.com (everycrsreport.com). The corpus contains 365,704 words (~512,000 tokens) across 2.8 MB of text files in the docs/ directory, meeting the requirement for a public-domain U.S. federal government work (us-gov-public-domain). The license check via p2 license passed with 252 OK files and 0 flagged/failing. EveryCRSReport explicitly states in its footer that CRS reports are works of the U.S. Government and not subject to copyright protection, permitting reproduction and distribution without permission. However, because CRS reports may occasionally incorporate copyrighted third-party images or excerpts, our ingestion pipeline stripped all images and extracted plain text only. During initial selection, seven off-topic reports covering subjects such as nuclear weapons, stun guns, and tanker aircraft were pruned to ensure corpus focus.
 
 ### The gold set
 
@@ -180,7 +180,7 @@ How did you decide that a document is relevant: write your relevance rule in two
 How did you find candidates (the systems' top 10, a keyword search, reading), and did you read every document before you labeled it?
 Your labels are binary (`rel` 1) unless you say otherwise: if you use graded labels, declare the scale here, for example 2 means the document answers the query fully and 1 means it helps.
 
-TODO: describe your gold set and your relevance rule.
+The gold set contains 30 total queries, comprising 10 human-written (hand) queries and 20 model-drafted (claude) queries across three query classes: 8 identifier, 15 paraphrase, and 7 mixed. We chose a mix of query classes because keyword search (bm25) and dense retrieval excel at different types of query structures. Relevance candidates were gathered by pooling the top 8 results from bm25, dense, and hybrid (yielding up to 14 candidates per query in a candidate sheet), with titles and excerpts used to determine which full documents to open and read. A document was judged relevant (rel 1) using binary labels if the reader determined that a person asking the query would be satisfied receiving the report. In specific broader queries like h01, reports providing partial answers (such as sector-specific agricultural emissions) were included under this rule. Three initial queries (h01, h02, and h10) yielded no relevant documents among their candidates and were rewritten to align with available corpus topics. Overall, 94 binary relevance judgments were recorded across the 30 queries.
 
 ---
 
