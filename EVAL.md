@@ -428,7 +428,17 @@ Did the winner change between the shared corpus and yours?
 Why, or why not: what is different about the two collections (document length, vocabulary, identifiers, near-duplicates, how the queries were written), and which of your explanations did you test and which are guesses?
 Say what 20 queries on one side and your gold-set size on the other cannot support.
 
-TODO: write the cross-corpus comparison.
+Comparing the shared-corpus practice queries to our own corpus shows that the winning system changed significantly. On the shared corpus, the LLM reranker won clearly, achieving the best MRR@10 of 0.800 and beating dense retrieval by +0.237 (interval `[+0.083, +0.408]`). On our own corpus, dense retrieval took the top spot with an MRR@10 of 0.983, and rerank was not distinguishable from dense (-0.072, interval `[-0.169, +0.011]`).
+
+This shift stems from how different query classes performed across the datasets. On the shared corpus, bm25 and dense each failed completely on one query type (bm25 scored 0.000 on paraphrase queries, while dense scored 0.333 on identifier queries), leaving a large performance gap that only the reranker could fix. In contrast, on our own corpus, all systems performed exceptionally well across classes: every system scored 1.000 on identifier queries, and even the lowest paraphrase score was 0.807. With no severe failures to repair, the reranker had virtually no room to improve over dense retrieval.
+
+To explain why these corpus dynamics differed, we tested several hypotheses while keeping others as educated guesses:
+
+* **Query origin difficulty (Tested & Measured):** We measured that human-written (`hand`) queries were harder than model-drafted (`claude`) queries. Both bm25 and rerank scored significantly worse on hand queries, with MRR@10 dropping from 0.942 to 0.673 for bm25 and from 1.000 to 0.733 for rerank (intervals excluding zero).
+* **Content-word overlap (Partly Measured):** We measured high content-word overlap on our corpus (0.77 for hand queries, 0.87 for Claude queries), but because we lack matching figures for the shared corpus, comparing overlap directly between the two collections remains a guess.
+* **Corpus vocabulary and style, hybrid candidate caps, and unjudged gold-set bias (Guesses):** Explanations such as the shared corpus containing dense legal/regulatory section numbers versus CRS reports using plain, repeating prose are plausible guesses that fit the identifier and paraphrase results, but we did not formally test them. Similarly, the possibility that hybrid's top 20 cap restricted reranking, or that rerank was penalized for promoting unjudged documents (as observed in query `h09`), remain unmeasured factors.
+
+Finally, sample size limitations constrain what these results can support. The shared corpus used only 20 practice queries, yielding wide confidence intervals (e.g., dense minus bm25 MRR@10 ranges from -0.225 to +0.343) that prevent definitive ranking between those two systems. On our own corpus, baseline scores above 0.95 left minimal headroom for gains, with an MDD around 0.05 MRR@10, and our 10 hand queries lacked identifier-class examples, meaning a different query mix could potentially alter the final outcome.
 
 ---
 
